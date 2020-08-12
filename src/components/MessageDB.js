@@ -7,11 +7,10 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Alert from 'react-bootstrap/Alert'
 import Modal from 'react-bootstrap/Modal'
 
 
-import { ImageCrop, RoundImage, P, LightH1, BMarBottom } from '../css/childcss'
+import { BMarBottom } from '../css/childcss'
 
 const client = new faunadb.Client({ secret: `${process.env.REACT_APP_FAUNADB_KEY}` })
 const q = faunadb.query

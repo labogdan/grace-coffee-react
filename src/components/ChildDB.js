@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import faunadb from 'faunadb'
 
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import { ImageCrop, RoundImage, P, LightH1 } from '../css/childcss'
+import { ImageCrop, RoundImage } from '../css/childcss'
 
 
 //const client = new faunadb.Client({ secret: `${process.env.FAUNADB_KEY}` })
@@ -14,41 +13,7 @@ import { ImageCrop, RoundImage, P, LightH1 } from '../css/childcss'
 
 
 class ChildDB extends Component {
-  constructor(props) {
-    super(props)
-
-/*    this.state = {
-      isDataFetched: false
-    };*/
-
-  }
-  /*
-  async componentDidMount() {
-    this.setState({child: null});
-    this.getChildByBeneficiary(this.props.beneficiary_id)
-  }*/
-
-
-
-/*
-  getChildByBeneficiary(beneficiary_id) {
-    client.query(
-      q.Get(
-      q.Match(
-        q.Index('childByBeneficiary'), beneficiary_id)))
-
-      .then(response => {
-        const child = response.data
-        console.log(child)
-        this.setState({
-          name: response.data.name,
-          isDataFetched: true,
-          child: response.data
-        })
-        return child
-      })
-      .catch(error => console.warn('error', error.message))
-  }*/
+  
 
   render () {
 

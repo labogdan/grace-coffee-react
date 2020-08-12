@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
 import faunadb from 'faunadb'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
-
-import { ImageCrop, RoundImage, P, LightH1 } from '../css/childcss'
 
 const client = new faunadb.Client({ secret: `${process.env.REACT_APP_FAUNADB_KEY}` })
 const q = faunadb.query
@@ -19,10 +14,7 @@ const styles = StyleSheet.create({
 });
 
 export class MyDoc extends Component {
-  constructor(props) {
-    super(props)
 
-  }
   render () {
     return (
       <Document>
@@ -77,7 +69,7 @@ class MessagePDF extends Component {
 
 
 renderMessages(data) {
-  const items = data.map((message, key) =>
+  data.map((message, key) =>
         <li key={message.subject}>{message.msg}</li>
     );
 }
