@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { IdentityContextProvider } from "react-netlify-identity";
+//import { IdentityContextProvider } from "react-netlify-identity";
 import {
   BrowserRouter as Router,
   Switch,
