@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-
+import { IdentityContextProvider } from "react-netlify-identity";
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,6 +11,7 @@ import {
 
 import ChildPage from './pages/ChildPage';
 import AdminPage from './pages/AdminPage';
+import ChildrenList from './pages/ChildrenList';
 
 function App() {
 
@@ -24,6 +25,9 @@ function App() {
             </li>
             <li>
               <Link to="/AdminPage">AdminPage</Link>
+            </li>
+            <li>
+              <Link to="/ChildrenList">ChildrenList</Link>
             </li>
           </ul>
         </nav>
@@ -42,6 +46,9 @@ function App() {
           </Route>
           <Route path="/AdminPage">
             <AdminPage />
+          </Route>
+          <Route path="/ChildrenList">
+            <ChildrenList />
           </Route>
           <Route path="/">
             <Home />
