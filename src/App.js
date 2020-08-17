@@ -43,7 +43,7 @@ function App() {
     <Auth0Provider
         domain="dev-ng7oei8x.us.auth0.com"
         clientId="1uRIMljGXoyZAuRVKpmUx8isZbQvB0eo"
-        redirectUri={process.env.REACT_APP_AUTH_HOST}
+        redirectUri={process.env.REACT_APP_AUTH_HOST/AdminPage}
       >
       <Router>
           <Switch>
