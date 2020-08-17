@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^1.0.0",
     "@reach/dialog": "^0.10.5",
     "@reach/tabs": "^0.10.5",
     "@reach/visually-hidden": "^0.10.4",

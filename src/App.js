@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 
-//import { IdentityContextProvider } from "react-netlify-identity";
-import { useIdentityContext, IdentityContextProvider } from "react-netlify-identity-widget"
-import "react-netlify-identity-widget/styles.css"
+import { Auth0Provider } from "@auth0/auth0-react";
+
+import PrivateRoute from './PrivateRoute';
 
 import {
   BrowserRouter as Router,
@@ -19,12 +19,6 @@ import ChildrenList from './pages/ChildrenList';
 
 function App() {
 
-  const url = "https://adoring-aryabhata-fa0f74.netlify.app/"
-  const IdentityModal = React.lazy(() => import("react-netlify-identity-widget"))
-  const identity = useIdentityContext()
-  const [dialog, setDialog] = React.useState(false)
-  const isLoggedIn = identity && identity.isLoggedIn
-
   function Home() {
     return (
 
@@ -39,33 +33,24 @@ function App() {
             <li>
               <Link to="/ChildrenList">ChildrenList</Link>
             </li>
-            <li>
-              <button className="btn" onClick={() => setDialog(isLoggedIn)}>
-                {isLoggedIn ? "LOG OUT" : "LOG IN"}
-              </button>
-              <React.Suspense fallback="loading...">
-                <IdentityModal showDialog={dialog} onCloseDialog={() => setDialog(false)} />
-              </React.Suspense>
-            </li>
           </ul>
         </nav>
 
   )
 }
+
   return (
-    <IdentityContextProvider value={url}>
+    <Auth0Provider
+        domain="dev-ng7oei8x.us.auth0.com"
+        clientId="1uRIMljGXoyZAuRVKpmUx8isZbQvB0eo"
+        redirectUri="http://localhost:3000/AdminPage"
+      >
       <Router>
-
-
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/ChildPage">
               <ChildPage />
             </Route>
-            <Route path="/AdminPage">
-              <AdminPage />
-            </Route>
+            <PrivateRoute path="/AdminPage" component={AdminPage} />
             <Route path="/ChildrenList">
               <ChildrenList />
             </Route>
@@ -75,7 +60,7 @@ function App() {
           </Switch>
 
       </Router>
-    </IdentityContextProvider>
+</Auth0Provider>
   );
 }
 
