@@ -16,6 +16,7 @@ import {
 import ChildPage from './pages/ChildPage';
 import AdminPage from './pages/AdminPage';
 import ChildrenList from './pages/ChildrenList';
+import ChildDeletePage from './pages/ChildDeletePage';
 
 function App() {
 
@@ -33,6 +34,9 @@ function App() {
             <li>
               <Link to="/ChildrenList">ChildrenList</Link>
             </li>
+          <li>
+              <Link to="/ChildDeletePage">ChildDeletePage</Link>
+          </li>
           </ul>
         </nav>
 
@@ -54,6 +58,9 @@ function App() {
             <Route path="/ChildrenList">
               <ChildrenList />
             </Route>
+              <Route path="/ChildDeletePage">
+                  <ChildDeletePage />
+              </Route>
             <Route path="/">
               <Home />
             </Route>

@@ -1,6 +1,7 @@
 import React from "react"
 import Importer from '../components/Importer';
 import MessagePDF from '../components/MessagePDF';
+import ChildLookupDelete from '../components/ChildLookupDelete';
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -74,6 +75,21 @@ const AdminPage = () => {
               </Card>
 
               </CardDeck>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Card bg={'light'}>
+                <Card.Header>
+                  <Card.Title>Child Lookup</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Text>
+                    Lookup Child to Delete
+                  </Card.Text>
+                  <ChildLookupDelete beneficiary_id="CO038000089" />
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
         </Container>

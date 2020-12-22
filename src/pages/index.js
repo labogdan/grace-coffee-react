@@ -12,10 +12,12 @@ const IndexPage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>Grace Coffee</h1>
+      <h1>Grace Coffee hello</h1>
       <Link to="/AdminPage">Admin View</Link>
       <br /><br />
       <Link to="/ChildPage">Child View</Link>
+        <br /><br />
+        <Link to="/ChildDeletePage">Child Delete</Link>
     </Layout>
   )
 }
