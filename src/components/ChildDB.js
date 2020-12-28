@@ -26,7 +26,7 @@ class ChildDB extends Component {
 
       <Card bg={'light'}>
         <Card.Header>
-          <Card.Title><h2>{child.name}</h2></Card.Title>
+          <Card.Title><h2>{(typeof child.full_name !== 'undefined' && child.full_name.length > 0 ? child.full_name : child.name)}</h2></Card.Title>
         </Card.Header>
         <Card.Body>
         <Container>

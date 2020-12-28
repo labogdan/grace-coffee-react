@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import faunadb from 'faunadb'
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
+import ChildDB from '../components/ChildDB';
+
 
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 
@@ -18,154 +21,174 @@ class ChildLookupDelete extends Component {
         super(props)
         this.state = {
             isChildrenFetched: false,
-            isDataFetched: false
+            isDataFetched: false,
+            childName: '',
+            showAlert: false,
+            showDeletedSuccess: false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.setShowAlert = this.setShowAlert.bind(this);
+        this.setShowDeletedSuccess = this.setShowDeletedSuccess.bind(this);
+        this.deleteChild = this.deleteChild.bind(this);
+
     }
 
     async componentDidMount() {
         //this.setState({child: null});
-        this.getAllChildren()
+        //this.getAllChildren()
     }
 
-    handleInputChange(event) {
-        const target = event.target
-        const value = target.value
-        const name = target.name
+    setShowAlert(toShow) {
+        this.setState({
+            showAlert: toShow
+        })
+    }
 
-        console.log(name)
-        console.log(value)
-
-        this.setState({name: value});
-        console.log(this.state)
+    setShowDeletedSuccess(toShow) {
+        this.setState({
+            showDeletedSuccess: toShow
+        })
     }
 
     handleSubmit(event) {
         event.preventDefault()
-        this.getMessagesByName()
-
+        //this.getMessagesByName()
+        this.searchForChild()
     }
 
-    getAllChildren() {
-        client.query(
-            q.Map(
-                q.Paginate(
-                    q.Match(q.Index("allChildren"))
-                ),
-                q.Lambda("Message",q.Get(q.Var("Message")))
-            )
-        )
-            .then(response => {
-                const children = response.data
-                console.log(children)
-                this.setState({
-                    children: children,
-                    isChildrenFetched: true
-                })
 
-                return children
-            })
-            .catch(error => console.warn('error', error.message))
-    }
+    searchForChild() {
+        console.log(this.state)
+        this.setShowAlert(false)
+        this.setShowDeletedSuccess(false)
+        let data = this.state.name.split(" - ")
+        console.log(data)
 
-    getMessagesByBeneficiary() {
         client.query(
             q.Map(
                 q.Paginate(
                     q.Match(
-                        q.Index('messagesByBeneficiary'), this.props.beneficiary_id)),
-                q.Lambda("Message",q.Get(q.Var("Message")))
+                        q.Index('childByName'), data[0]
+                        )
+                ),
+                q.Lambda(x => q.Get(x))
             )
-        )
-            .then(response => {
-                const message = response.data
-                console.log(message)
-                this.setState({
-                    messages: message,
-                    isDataFetched: true
-                })
-
-                return message
+        ).then(response => {
+            const children = response.data
+            console.log(children)
+            console.log(children.length)
+            if (children.length === 0) {
+                this.setShowAlert(true)
+                return
+            }
+            this.setState({
+                children: response.data,
+                isDataFetched: true
             })
-            .catch(error => console.warn('error', error.message))
+            return children
+        });
+
     }
 
-    getMessagesByName() {
-        console.log(this.state)
-        let data = this.state.name.split(" - ")
-        console.log(data)
+    deleteChild(event) {
+        console.log(event.target.dataset)
+        this.setShowDeletedSuccess(false)
         client.query(
             q.Map(
                 q.Paginate(
-                    q.Intersection(
-                        q.Match(
-                            q.Index('messagesByName'), data[0]),
-                        q.Match(
-                            q.Index('messagesByDateOfBirth'), data[1])
+                    q.Match(
+                        q.Index('childByBeneficiary'), event.target.dataset.val
                     )
                 ),
-                q.Lambda("Message",q.Get(q.Var("Message")))
+                q.Lambda(x => q.Delete(x))
             )
-        )
-            .then(response => {
-                const message = response.data
-                console.log(message)
-                this.setState({
-                    messages: message,
-                    isDataFetched: true
-                })
-
-                return message
-            })
-            .catch(error => console.warn('error', error.message))
+        ).then(response => {
+            const children = response.data
+            console.log(children)
+            this.setShowDeletedSuccess(true)
+        });
     }
+
+    handleChange(event) {
+        this.setState({name: event.target.value});
+    }
+
 
     render () {
 
-        if(!this.state.isChildrenFetched) return null;
+        const {child} = this.state || {};
 
         if(!this.state.isDataFetched) {
             return (
                 <form onSubmit={this.handleSubmit}>
-                    <Form.Label>Custom select</Form.Label>
+                    {this.state.showAlert ? (
+                        <Alert variant="warning" onClose={() => this.setShowAlert(false)} dismissible>
+                            <Alert.Heading>A child by that name was not found.</Alert.Heading>
+                            <p>
+                                Check that you spelled the name correctly and that you used a capital letter.
+                            </p>
+                        </Alert>
+                    ) : (<></>)
+                    }
 
-                    <Form.Control as="select"
-                                  custom
-                                  value={this.state.name}
-                                  onChange={this.handleInputChange}
-                    >
-                        <option>------</option>
-                        {this.state.children.map(child => (
-                            <option key={child.data.beneficiary_id}>{child.data.name} - {child.data.date_of_birth}</option>
-                        ))}
-                    </Form.Control>
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+
                     <br /><br />
+
                     <Button type="submit">Submit</Button>
                 </form>
+
+
             )
         } else {
             return (
                 <>
                     <form onSubmit={this.handleSubmit}>
-                        <Form.Label>Custom select</Form.Label>
+                        {this.state.showAlert ? (
+                            <Alert variant="warning" onClose={() => this.setShowAlert(false)} dismissible>
+                                <Alert.Heading>A child by that name was not found.</Alert.Heading>
+                                <p>
+                                    Check that you spelled the name correctly and that you used a capital letter.
+                                </p>
+                            </Alert>
+                        ) : (<></>)
+                        }
 
-                        <Form.Control as="select" custom value={this.state.value} onChange={this.handleInputChange}>
-                            <option>------</option>
-                            {this.state.children.map(child => (
-                                <option key={child.data.beneficiary_id}>{child.data.name} - {child.data.date_of_birth}</option>
-                            ))}
-                        </Form.Control>
+                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+
                         <br /><br />
+
                         <Button type="submit">Submit</Button>
+                    </form>
+
+                    {this.state.showDeletedSuccess ? (
+                        <Alert variant="success" onClose={() => this.setShowDeletedSuccess(false)} dismissible>
+                            <Alert.Heading>Child has been successfully deleted.</Alert.Heading>
+                        </Alert>
+                    ) : (<></>)
+                    }
+
+                    <form>
+                    {this.state.children.map(child => (
+                        <div key={child.data.beneficiary_id}>
+                            <ChildDB
+                                child={child.data}
+                            />
+                            <br />
+
+                                <input type="hidden" value={child.data.beneficiary_id} />
+                                <Button type="button" onClick={this.deleteChild} data-val={child.data.beneficiary_id}>Delete this Child?</Button>
+
+                            <br />
+                        </div>
+                    ))}
                     </form>
 
                 </>
             )
         }
-
-
     }
 }
 
