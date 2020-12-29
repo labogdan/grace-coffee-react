@@ -113,8 +113,6 @@ class ChildLookupDelete extends Component {
 
     render () {
 
-        const {child} = this.state || {};
-
             return (
                 <>
                     <form onSubmit={this.handleSubmit}>
