@@ -12,6 +12,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
+import logo from '../images/GCPrimaryColor.png';
+
 const AdminPage = () => {
 
   const LogoutButton = () => {
@@ -33,7 +35,7 @@ const AdminPage = () => {
         <Container>
           <Row>
             <Col>
-              <Card.Title>Grace Coffee Child Admin Page</Card.Title>
+              <img src={logo} />
             </Col>
             <Col>
             <div class="d-flex justify-content-end">
