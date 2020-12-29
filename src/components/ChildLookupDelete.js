@@ -2,19 +2,14 @@ import React, { Component } from 'react'
 import faunadb from 'faunadb'
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import Form from 'react-bootstrap/Form';
+
 import ChildDB from '../components/ChildDB';
 
 
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
+
 
 const client = new faunadb.Client({ secret: `${process.env.REACT_APP_FAUNADB_KEY}` })
 const q = faunadb.query
-
-const styles = StyleSheet.create({
-    section: { marginBottom: 30 },
-    bold: { fontWeight: 'bold' }
-});
 
 class ChildLookupDelete extends Component {
     constructor(props) {
