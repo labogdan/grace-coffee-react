@@ -35,7 +35,7 @@ const AdminPage = () => {
         <Container>
           <Row>
             <Col>
-              <img src={logo} />
+              <img src={logo} alt="" />
             </Col>
             <Col>
             <div class="d-flex justify-content-end">
