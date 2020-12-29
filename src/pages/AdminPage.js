@@ -79,6 +79,7 @@ const AdminPage = () => {
           </Row>
           <Row>
             <Col>
+              <br />
               <Card bg={'light'}>
                 <Card.Header>
                   <Card.Title>Child Lookup</Card.Title>

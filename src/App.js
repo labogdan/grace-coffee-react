@@ -54,7 +54,7 @@ function App() {
             <Route path="/ChildPage">
               <ChildPage />
             </Route>
-            <Route path="/AdminPage" component={AdminPage} />
+            <PrivateRoute path="/AdminPage" component={AdminPage} />
             <Route path="/ChildrenList">
               <ChildrenList />
             </Route>

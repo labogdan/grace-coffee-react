@@ -120,29 +120,6 @@ class ChildLookupDelete extends Component {
 
         const {child} = this.state || {};
 
-        if(!this.state.isDataFetched) {
-            return (
-                <form onSubmit={this.handleSubmit}>
-                    {this.state.showAlert ? (
-                        <Alert variant="warning" onClose={() => this.setShowAlert(false)} dismissible>
-                            <Alert.Heading>A child by that name was not found.</Alert.Heading>
-                            <p>
-                                Check that you spelled the name correctly and that you used a capital letter.
-                            </p>
-                        </Alert>
-                    ) : (<></>)
-                    }
-
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
-
-                    <br /><br />
-
-                    <Button type="submit">Submit</Button>
-                </form>
-
-
-            )
-        } else {
             return (
                 <>
                     <form onSubmit={this.handleSubmit}>
@@ -171,25 +148,24 @@ class ChildLookupDelete extends Component {
                     }
 
                     <form>
-                    {this.state.children.map(child => (
+                    {this.state.isDataFetched && !this.state.showDeletedSuccess && !this.state.showAlert ? (this.state.children.map(child => (
                         <div key={child.data.beneficiary_id}>
+                            <br/>
                             <ChildDB
                                 child={child.data}
                             />
-                            <br />
 
                                 <input type="hidden" value={child.data.beneficiary_id} />
-                                <Button type="button" onClick={this.deleteChild} data-val={child.data.beneficiary_id}>Delete this Child?</Button>
+                                <Button type="button" onClick={this.deleteChild} data-val={child.data.beneficiary_id}>Delete {child.data.full_name ? child.data.full_name : child.data.name}?</Button>
 
                             <br />
                         </div>
-                    ))}
+                    ))) : (<></>)}
                     </form>
-
                 </>
             )
         }
-    }
+
 }
 
 export default ChildLookupDelete
