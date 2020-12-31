@@ -146,6 +146,7 @@ class ChildLookupDelete extends Component {
                             <br/>
                             <ChildDB
                                 child={child.data}
+                                admin={true}
                             />
 
                                 <input type="hidden" value={child.data.beneficiary_id} />

@@ -17,7 +17,7 @@ class ChildDB extends Component {
 
   render () {
 
-    const {child} = this.props || {};
+    const { child, admin } = this.props || {};
 
 
     return (
@@ -27,6 +27,9 @@ class ChildDB extends Component {
       <Card bg={'light'}>
         <Card.Header>
           <Card.Title><h2>{(typeof child.full_name !== 'undefined' && child.full_name.length > 0 ? child.full_name : child.name)}</h2></Card.Title>
+          {admin === true && (
+              <p><b>Benificiary ID: </b>{child.beneficiary_id}</p>
+          )}
         </Card.Header>
         <Card.Body>
         <Container>
@@ -70,7 +73,7 @@ class ChildDB extends Component {
             </Col>
             <Col md={4}>
             <Row>
-              <Col xs={6}><b>Marital Status:</b></Col>
+              <Col xs={6}><b>Parents' Marital Status:</b></Col>
               <Col xs={6}>{child.marital_status_of_parents}</Col>
             </Row>
 
