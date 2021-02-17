@@ -67,8 +67,8 @@ class MessageDB extends Component {
    }
  }
 
-
   createMessage() {
+    this.messageSignature = "., Friend of Grace Coffee";
     client.query(
       q.Create(
         q.Collection('Message'),
@@ -78,7 +78,7 @@ class MessageDB extends Component {
               name: this.props.child.name,
               date_of_birth: this.props.child.date_of_birth,
               title: this.state.subject,
-              msg: this.state.msg
+              msg: this.state.msg + " ---" + this.props.firstName + " " + this.props.lastName.charAt(0) + this.messageSignature
             }
           },
         )
